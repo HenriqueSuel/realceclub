@@ -1,14 +1,17 @@
 import "reflect-metadata";
-import cors from "cors";
 import express, { NextFunction, Request, Response } from "express";
+import cors from "cors";
+import dotenv from 'dotenv';
+dotenv.config();
+
+import "@shared/container";
 
 import "express-async-errors";
 import { AppError } from "@shared/errors/AppError";
-/* import createConnection from "@shared/infra/typeorm"; */
+import "@shared/infra/typeorm";
 
 import { router } from "./routes";
 
-/* createConnection(); */
 
 const app = express();
 

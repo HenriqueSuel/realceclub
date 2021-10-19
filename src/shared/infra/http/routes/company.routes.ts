@@ -1,10 +1,14 @@
+
+import { CompanyController } from "@modules/company/services/CompanyController";
 import { Router } from "express";
 
 const companyRoutes = Router();
 
-companyRoutes.get('/', (request, response) => {
-    response.json({ name: 'Henrique '})
-})
+
+const companyController = new CompanyController();
+
+
+companyRoutes.post('/', companyController.create)
 
 
 export { companyRoutes }
