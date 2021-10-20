@@ -3,6 +3,8 @@ node_modules
 tmp/*
 coverage
 .env
+.env.local
+.env.prod
 !tmp/.gitkeep
 dist
 package-lock.json

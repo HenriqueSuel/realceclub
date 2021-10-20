@@ -6,5 +6,5 @@ interface ICompanyDto {
     name_company: string;
     owner_name: string;
     phone: string;
-    created_at: Date;
+    created_at?: Date;
 } 

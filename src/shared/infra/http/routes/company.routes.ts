@@ -9,6 +9,7 @@ const companyController = new CompanyController();
 
 
 companyRoutes.post('/', companyController.create)
+companyRoutes.patch('/', companyController.update)
 
 
 export { companyRoutes }

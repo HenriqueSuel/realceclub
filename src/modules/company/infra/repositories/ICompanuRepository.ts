@@ -1,6 +1,16 @@
+import { Company } from "../entities/Company";
+
+interface IUpadate {
+    id:string;
+    name_company: string;
+    owner_name: string;
+    phone: string;
+}
 
 interface ICompanyRepository {
-    create(company: ICompanyDto): Promise<void>
+    create(company: ICompanyDto): Promise<Company>;
+    existingCompanyVerifier(cnpj: string, email: string): Promise<Company>;
+    update({id, name_company,owner_name, phone}:IUpadate): Promise<Company>;
 }
 
 export {ICompanyRepository}
