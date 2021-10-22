@@ -9,8 +9,9 @@ interface IUpadate {
 
 interface ICompanyRepository {
     create(company: ICompanyDto): Promise<Company>;
-    existingCompanyVerifier(cnpj: string, email: string): Promise<Company>;
+    existingCompanyVerifier(cnpj: string, email?: string): Promise<Company>;
     update({id, name_company,owner_name, phone}:IUpadate): Promise<Company>;
+    login({password, email}): Promise<Company>;
 }
 
 export {ICompanyRepository}

@@ -12,20 +12,30 @@ class CompanyRepository implements ICompanyRepository {
 
     async create(company: ICompanyDto): Promise<Company> {
         const companySave = this.repository.create({...company});
+        
         return await this.repository.save(companySave);
     }
 
-    async existingCompanyVerifier(cnpj: string, email: string):Promise<Company> {
+    async existingCompanyVerifier( email: string, cnpj?: string,):Promise<Company> {
         const companyFoundQuery = await this.repository.createQueryBuilder('existingCompanyVerifier')
-        .where('cnpj = :cnpj', { cnpj }).orWhere('email = :email', {email});
+        .where('email = :email', { email })
 
-        const companyFound = companyFoundQuery.getOne();
+        if(cnpj) {
+            console.log('Entrou');
+            companyFoundQuery.orWhere('cnpj = :cnpj', { cnpj })
+        }
+        
+        const companyFound = await companyFoundQuery.getOne();
         return companyFound;
     }
 
     async update({id, name_company,owner_name, phone}):Promise<Company> {
         await (await this.repository.update(id, {name_company,owner_name, phone}))
         return await this.repository.findOne(id);
+    }
+
+    async login({password, email }):Promise<Company> {
+        return await this.repository.findOne({ password,email });
     }
 }
 

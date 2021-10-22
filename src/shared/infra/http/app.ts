@@ -23,6 +23,7 @@ app.use(router);
 app.use(
   (err: Error, request: Request, response: Response, next: NextFunction) => {
     if (err instanceof AppError) {
+      console.log('entrou')
       return response.status(err.statusCode).json({
         message: err.message,
       });
