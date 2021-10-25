@@ -43,6 +43,16 @@ class CompanyController {
         return response.status(201).json({...infoCompany});
     } 
 
+    async getProfile(request: Request, response: Response): Promise<Response> {
+        const { id } = request['company'];
+        
+        const companyService = container.resolve(CompanyService);
+        const company = await companyService.getProfile({ id })
+
+        return response.status(201).json(company);
+    }
+    
+
 }
 
 export {CompanyController};

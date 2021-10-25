@@ -29,6 +29,7 @@ export class CreateEmployess1634765303590 implements MigrationInterface {
                     {
                         name: "full_name",
                         type: "varchar",
+                        isNullable: true
                     },
                     {
                         name: "phone",

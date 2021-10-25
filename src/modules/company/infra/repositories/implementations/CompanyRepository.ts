@@ -16,7 +16,7 @@ class CompanyRepository implements ICompanyRepository {
         return await this.repository.save(companySave);
     }
 
-    async existingCompanyVerifier( email: string, cnpj?: string,):Promise<Company> {
+    async existingCompanyVerifier({email, cnpj}):Promise<Company> {
         const companyFoundQuery = await this.repository.createQueryBuilder('existingCompanyVerifier')
         .where('email = :email', { email })
 
@@ -26,6 +26,7 @@ class CompanyRepository implements ICompanyRepository {
         }
         
         const companyFound = await companyFoundQuery.getOne();
+        console.log(companyFound)
         return companyFound;
     }
 
@@ -36,6 +37,10 @@ class CompanyRepository implements ICompanyRepository {
 
     async login({password, email }):Promise<Company> {
         return await this.repository.findOne({ password,email });
+    }
+
+    async findById(id):Promise<Company> {
+        return await this.repository.findOne(id);
     }
 }
 

@@ -33,6 +33,25 @@ class EmployeesController {
         return response.status(201).json({...infoEmployees});
     } 
 
+    async search(request: Request, response: Response): Promise<Response> {
+        const  { cpf, email }  = request.query as unknown as IEmployeesDTO
+
+        const employeesService = container.resolve(EmployeesServices);
+
+        const infoEmployees = await employeesService.search({cpf, email })
+
+        return response.status(200).json({...infoEmployees});
+    } 
+
+    async getInvite(request: Request, response: Response): Promise<Response> {
+        const { id } = request['employees'];
+        const employeesService = container.resolve(EmployeesServices);
+
+        const infoEmployees = await employeesService.getInvite(id)
+
+        return response.status(200).json({...infoEmployees});
+    } 
+
 }
 
 export {EmployeesController};

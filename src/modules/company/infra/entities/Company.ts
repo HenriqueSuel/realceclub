@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn } from "typeorm";
+import { Employees } from "@modules/employees/infra/entities/Employees";
+import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, PrimaryColumn } from "typeorm";
 import { v4 } from "uuid";
 
 @Entity("company")
@@ -27,6 +28,14 @@ class Company {
 
     @CreateDateColumn()
     created_at: Date;
+
+    @ManyToMany(() => Employees)
+    @JoinTable({
+      name: "company_employees",
+      joinColumns: [{ name: "company_id" }],
+      inverseJoinColumns: [{ name: "employee_id" }],
+    })
+    invitations: Omit<Employees, 'password' | 'id'> [];
 
 
     constructor() {

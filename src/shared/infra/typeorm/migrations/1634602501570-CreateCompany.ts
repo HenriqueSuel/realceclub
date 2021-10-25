@@ -29,10 +29,12 @@ export class CreateCompany1634602501570 implements MigrationInterface {
                     {
                         name: "name_company",
                         type: "varchar",
+                        isNullable: true
                     },
                     {
                         name: "owner_name",
                         type: "varchar",
+                        isNullable: true
                     },
                     {
                         name: "phone",

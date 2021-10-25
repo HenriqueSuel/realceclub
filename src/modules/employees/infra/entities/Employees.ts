@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn } from "typeorm";
+import { Company } from "@modules/company/infra/entities/Company";
+import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, PrimaryColumn } from "typeorm";
 import { v4 } from "uuid";
 
 @Entity("employees")

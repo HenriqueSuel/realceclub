@@ -16,9 +16,12 @@ class EmployeesRepository implements IEmployeesRepository {
         return await this.repository.save(employessCreate);
     }
 
-    async existingEmployeesVerifier( email: string, cpf?: string,):Promise<Employees> {
+    async existingEmployeesVerifier({email, cpf}):Promise<Employees> {
         const employessFoundQuery = await this.repository.createQueryBuilder('existingCompanyVerifier')
-        .where('email = :email', { email })
+       
+        if(email) {
+            employessFoundQuery .orWhere('email = :email', { email })
+        }
 
         if(cpf) {
             employessFoundQuery.orWhere('cpf = :cpf', { cpf })
@@ -30,6 +33,13 @@ class EmployeesRepository implements IEmployeesRepository {
 
     async login({password, email }):Promise<Employees> {
         return await this.repository.findOne({ password,email });
+    }
+
+    async getInvite(id):Promise<Employees> {
+        return await this.repository.findOne({
+            relations: ['invitations'],
+            where: { id },
+        });
     }
 }
 

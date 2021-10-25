@@ -14,8 +14,8 @@ class EmployeesServices {
       ) {}
 
       async create(employessData:IEmployeesDTO) {
-
-        const employessFound = await this.employeesRepository.existingEmployeesVerifier(employessData.cpf, employessData.email);
+        const { email, cpf } = employessData
+        const employessFound = await this.employeesRepository.existingEmployeesVerifier({email, cpf });
 
         
         if(employessFound) {
@@ -58,6 +58,28 @@ class EmployeesServices {
 
         return {...token, employees}
 
+      }
+      async search({email, cpf}) {
+        const employees = await this.employeesRepository.existingEmployeesVerifier({email, cpf});
+         
+        if(!employees) {
+          throw new AppError(ERROR.EMPLOYEES.SEARCH);
+        }
+        
+
+        delete employees.id;
+        delete employees.password;
+
+        return employees
+      }
+      async getInvite(id) {
+        const employees = await this.employeesRepository.getInvite(id);
+         
+        if(!employees) {
+          throw new AppError(ERROR.EMPLOYEES.SEARCH);
+        }
+        
+        return employees
       }
 }
 

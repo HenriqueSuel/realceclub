@@ -1,22 +1,22 @@
+import { ICompanyRepository } from "@modules/company/infra/repositories/ICompanuRepository";
 import { AppError } from "@shared/errors/AppError";
 import { CreateToken } from "@utils/createToken";
 import { ERROR } from "@utils/message/errorMessage";
 import { compare, hash } from "bcrypt";
 import { inject, injectable } from "tsyringe";
-import { ICompanyRepository } from "../infra/repositories/ICompanuRepository";
 
 @injectable()
 class CompanyService {
     constructor(
         @inject("CompanyRepository")
-        private companyRepository: ICompanyRepository
+        private companyRepository: ICompanyRepository,
       ) {}
 
       async create(companyData:ICompanyDto) {
-
-        const companyFound = await this.companyRepository.existingCompanyVerifier(companyData.cnpj, companyData.email);
-
+        const {email, cnpj} = companyData
+        const companyFound = await this.companyRepository.existingCompanyVerifier({email, cnpj});
         
+        console.log(companyFound)
         if(companyFound) {
           throw new AppError(ERROR.COMPANY.EXISTING_COMPANY);
         }
@@ -40,16 +40,16 @@ class CompanyService {
         const company = await this.companyRepository.update({id, name_company, owner_name, phone });
         delete company.id;
         delete company.password;
-
-        return 
       }
 
       async login({email, password}) {
         const company = await this.companyRepository.existingCompanyVerifier(email);
          
+
         if(!company) {
-          throw new AppError('ERROR.COMPANY.LOGIN_FAIL');
+          throw new AppError(ERROR.COMPANY.LOGIN_FAIL);
         }
+        console.log(company)
         
         const passwordMatch = await compare(password, company.password);
 
@@ -65,6 +65,13 @@ class CompanyService {
 
         return {...token, company}
 
+      }
+
+      async getProfile({id}) {
+       const company = await this.companyRepository.findById(id);
+       delete company.id;
+       delete company.password;
+        return company
       }
 }
 
