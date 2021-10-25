@@ -14,7 +14,10 @@ import { router } from "./routes";
 
 
 const app = express();
-app.use(cors())
+app.use(cors({
+  origin: 'https://realceclub-web.herokuapp.com'
+}));
+
 app.use(express.json());
 
 
