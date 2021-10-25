@@ -15,8 +15,7 @@ import { router } from "./routes";
 
 const app = express();
 app.use(cors({
-  origin: 'https://realceclub-web.herokuapp.com',
-  methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
+  origin: '*'
 }));
 
 app.use(express.json());
@@ -24,7 +23,7 @@ app.use(express.json());
 
 
 
-app.use(router);
+app.use(cors(),router);
 
 app.use(
   (err: Error, request: Request, response: Response, next: NextFunction) => {
