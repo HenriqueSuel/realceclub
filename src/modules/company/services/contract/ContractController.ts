@@ -1,11 +1,6 @@
-import { AppError } from "@shared/errors/AppError";
-import { CnpjValidator } from "@utils/CnpjValidator";
-import { ERROR } from "@utils/message/errorMessage";
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 import { ContractService } from "./ContractService";
-
-
 
 class ContractsController {
     

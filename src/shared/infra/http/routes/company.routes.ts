@@ -1,6 +1,6 @@
 
 import { CompanyController } from "@modules/company/services/company/CompanyController";
-import { ContractsController } from "@modules/company/services/contract/contractController";
+import { ContractsController } from "@modules/company/services/contract/ContractController";
 import { Router } from "express";
 import { ensureAuthenticatedCompany } from "../middlewares/ensureAuthenticatedCompany";
 
