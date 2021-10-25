@@ -16,7 +16,6 @@ class CompanyService {
         const {email, cnpj} = companyData
         const companyFound = await this.companyRepository.existingCompanyVerifier({email, cnpj});
         
-        console.log(companyFound)
         if(companyFound) {
           throw new AppError(ERROR.COMPANY.EXISTING_COMPANY);
         }
@@ -43,13 +42,12 @@ class CompanyService {
       }
 
       async login({email, password}) {
-        const company = await this.companyRepository.existingCompanyVerifier(email);
+        const company = await this.companyRepository.existingCompanyVerifier({email});
          
 
         if(!company) {
           throw new AppError(ERROR.COMPANY.LOGIN_FAIL);
         }
-        console.log(company)
         
         const passwordMatch = await compare(password, company.password);
 

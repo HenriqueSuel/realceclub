@@ -26,7 +26,6 @@ class CompanyRepository implements ICompanyRepository {
         }
         
         const companyFound = await companyFoundQuery.getOne();
-        console.log(companyFound)
         return companyFound;
     }
 
