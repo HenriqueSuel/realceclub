@@ -1,6 +1,7 @@
 import { Company } from "@modules/company/infra/entities/Company";
 import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, PrimaryColumn } from "typeorm";
 import { v4 } from "uuid";
+import { Exclude, Expose } from 'class-transformer';
 
 @Entity("employees")
 export class Employees {
@@ -13,6 +14,7 @@ export class Employees {
     @Column()
     email:string;
 
+    @Exclude({ toPlainOnly: true })
     @Column()
     password: string;
 

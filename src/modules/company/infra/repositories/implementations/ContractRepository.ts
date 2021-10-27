@@ -18,21 +18,37 @@ class ContratsRepository implements IContratsRepository {
         
         await this.repository.save(contract);
     }
-    async getInvite(employee_id: string ): Promise<Contract[]> {
+    async getInvite({company_id, employee_id } ): Promise<Contract[]> {
 
-        const contracts = await this.repository.find({
-            relations: ['company'],
-            where: { employee_id: employee_id }
-        });
-/*         const contracts = await this.repository.find({
-            relations: ['company'],
-            where: { employee_id: employee_id }
-        }); */
-   /*      const contracts = await this.repository.find({
-            employee_id, 
-        }); */
-        
+        let contracts = null;
+        if(employee_id) {
+            contracts = await this.repository.find({
+                relations: ['company'],
+                where: { employee_id: employee_id }
+            });
+        } 
+        if(company_id) {
+            contracts = await this.repository.find({
+                relations: ['employees'],
+                where: { company_id: company_id },
+            });
+        }
         return contracts;
+    }
+    async findContract({company_id, employee_id } ): Promise<Contract> {
+
+        const contracts = await this.repository.findOne({
+            relations: ['company'],
+            where: { employee_id: employee_id, company_id: company_id },
+        });
+
+        return contracts;
+    }
+
+    async handleInvite({invitation_status,id_contract  } ): Promise<void> {
+        console.log('Chegou no atualizar')
+        await this.repository.update({id: id_contract}, {invitation_status});
+
     }
 }
 

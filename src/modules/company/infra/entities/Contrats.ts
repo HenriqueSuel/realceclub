@@ -1,3 +1,4 @@
+import { Employees } from "@modules/employees/infra/entities/Employees";
 import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryColumn } from "typeorm";
 import { v4 } from "uuid";
 import { Company } from "./Company";
@@ -19,6 +20,12 @@ class Contract {
 
     @Column()
     employee_id:string;
+
+    @ManyToOne(() => Employees)
+    @JoinColumn({
+      name:'employee_id',
+    })
+    employees: Employees;
 
     @Column()
     invitation_status: boolean;

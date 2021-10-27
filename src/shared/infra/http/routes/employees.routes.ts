@@ -14,7 +14,8 @@ const contractsController = new ContractsController();
 employeesRoutes.post('/', employeesController.create)
 employeesRoutes.post('/login', employeesController.login)
 employeesRoutes.get('/search',ensureAuthenticatedCompany, employeesController.search)
-employeesRoutes.get('/invite',ensureAuthenticatedEmployees, contractsController.getInvite)
+employeesRoutes.get('/invite',ensureAuthenticatedEmployees, contractsController.getInviteEmployees)
+employeesRoutes.patch('/invite',ensureAuthenticatedEmployees, contractsController.handleInvite)
 
 
 export { employeesRoutes }

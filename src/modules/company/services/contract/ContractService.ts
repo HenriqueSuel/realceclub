@@ -4,6 +4,7 @@ import { IEmployeesRepository } from "@modules/employees/infra/repositories/IEmp
 import { AppError } from "@shared/errors/AppError";
 import { ERROR } from "@utils/message/errorMessage";
 import { inject, injectable } from "tsyringe";
+import { classToPlain } from 'class-transformer';
 
 @injectable()
 class ContractService {
@@ -28,8 +29,12 @@ class ContractService {
         if(!company) {
           throw new AppError(ERROR.COMPANY.SEARCH);
         }
-
-
+        
+        const contract = await this.contratsRepository.findContract({ company_id, employee_id: employee.id})
+        
+        if(contract) {
+          throw new AppError('Convite já enviado');
+        }
         await this.contratsRepository.create({ 
             company_id: company.id,
             employee_id: employee.id
@@ -37,10 +42,20 @@ class ContractService {
 
       }
 
-      async getInvite( employee_id: string ) {
+      async findInviteCompany( company_id: string ) {
+        const contracts = await this.contratsRepository.getInvite({company_id, employee_id: null});
+        const t = classToPlain(contracts)
         
-        const contracts = await this.contratsRepository.getInvite(employee_id);
+        return t
+      }
+      
+      async findInviteEmployees( employee_id: string ) {
+        const contracts = await this.contratsRepository.getInvite({employee_id,company_id: null });
+        return contracts
+      }
 
+      async handleInvite( employee_id: string, id_contract: string, invitation_status: boolean) {
+        const contracts = await this.contratsRepository.handleInvite({id_contract, invitation_status });
         return contracts
       }
 

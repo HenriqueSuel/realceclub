@@ -3,6 +3,7 @@ import { CompanyController } from "@modules/company/services/company/CompanyCont
 import { ContractsController } from "@modules/company/services/contract/ContractController";
 import { Router } from "express";
 import { ensureAuthenticatedCompany } from "../middlewares/ensureAuthenticatedCompany";
+import { ensureAuthenticatedEmployees } from "../middlewares/ensureAuthenticatedEmployees";
 
 const companyRoutes = Router();
 
@@ -16,6 +17,8 @@ companyRoutes.patch('/', ensureAuthenticatedCompany, companyController.update)
 companyRoutes.post('/login', companyController.login)
 companyRoutes.post('/invite', ensureAuthenticatedCompany, contractsController.inviteEmployees)
 companyRoutes.get('/me',ensureAuthenticatedCompany, companyController.getProfile)
+companyRoutes.get('/invite',ensureAuthenticatedCompany, contractsController.getInviteCompany)
+
 
 
 export { companyRoutes }

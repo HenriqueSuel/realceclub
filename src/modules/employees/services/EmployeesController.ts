@@ -36,6 +36,7 @@ class EmployeesController {
     async search(request: Request, response: Response): Promise<Response> {
         const  { cpf, email }  = request.query as unknown as IEmployeesDTO
 
+        console.log(cpf, email)
         const employeesService = container.resolve(EmployeesServices);
 
         const infoEmployees = await employeesService.search({cpf, email })

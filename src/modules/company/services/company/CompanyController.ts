@@ -49,7 +49,7 @@ class CompanyController {
         const companyService = container.resolve(CompanyService);
         const company = await companyService.getProfile({ id })
 
-        return response.status(201).json(company);
+        return response.status(200).json(company);
     }
     
 

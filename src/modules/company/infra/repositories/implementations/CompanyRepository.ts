@@ -21,7 +21,6 @@ class CompanyRepository implements ICompanyRepository {
         .where('email = :email', { email })
 
         if(cnpj) {
-            console.log('Entrou');
             companyFoundQuery.orWhere('cnpj = :cnpj', { cnpj })
         }
         
@@ -30,7 +29,7 @@ class CompanyRepository implements ICompanyRepository {
     }
 
     async update({id, name_company,owner_name, phone}):Promise<Company> {
-        await (await this.repository.update(id, {name_company,owner_name, phone}))
+        await this.repository.update(id, {name_company,owner_name, phone})
         return await this.repository.findOne(id);
     }
 

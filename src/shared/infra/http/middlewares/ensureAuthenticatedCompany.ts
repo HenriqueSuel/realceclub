@@ -26,8 +26,10 @@ export async function ensureAuthenticatedCompany (
       id: company_id,
     };
 
+    console.log('Aqui', company_id)
     next();
   } catch {
+    console.log(authHeader)
     throw new AppError("Token invalido", 401);
   }
 }
