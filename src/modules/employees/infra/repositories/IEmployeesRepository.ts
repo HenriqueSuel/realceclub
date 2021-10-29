@@ -8,6 +8,7 @@ interface IEmployeesRepository {
     existingEmployeesVerifier({email, cpf}: { email?: string, cpf?:string}): Promise<Employees>;
     login({password, email}): Promise<Employees>;
     getInvite(id): Promise<Employees>;
+    findById(id): Promise<Employees>;
 }
 
 export {IEmployeesRepository}

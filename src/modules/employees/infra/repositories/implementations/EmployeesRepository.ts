@@ -41,6 +41,10 @@ class EmployeesRepository implements IEmployeesRepository {
             where: { id },
         });
     }
+
+    async findById(id):Promise<Employees> {
+        return await this.repository.findOne(id);
+    }
 }
 
 export {EmployeesRepository}

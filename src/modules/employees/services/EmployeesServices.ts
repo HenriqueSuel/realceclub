@@ -38,6 +38,7 @@ class EmployeesServices {
       }
 
       async login({email, password}) {
+        console.log('chamou login')
         const employees = await this.employeesRepository.existingEmployeesVerifier(email);
          
         if(!employees) {
@@ -81,6 +82,13 @@ class EmployeesServices {
         
         return employees
       }
+
+      async getProfile({id}) {
+        const employees = await this.employeesRepository.findById(id);
+        delete employees.id;
+        delete employees.password;
+        return employees
+       }
 }
 
 export {EmployeesServices}

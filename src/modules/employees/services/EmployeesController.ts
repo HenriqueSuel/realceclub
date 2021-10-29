@@ -53,6 +53,15 @@ class EmployeesController {
         return response.status(200).json({...infoEmployees});
     } 
 
+    async getProfile(request: Request, response: Response): Promise<Response> {
+        const { id } = request['employees'];
+        
+        const employeesService = container.resolve(EmployeesServices);
+        const employees = await employeesService.getProfile({ id })
+
+        return response.status(200).json(employees);
+    }
+
 }
 
 export {EmployeesController};
