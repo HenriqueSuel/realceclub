@@ -15,14 +15,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      
-      - name: NPM Install and ENV Config
-        run: |
-          npm install
-
-      - name: Build and Export
-        run: |
-          npm run build
 
       - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
