@@ -2,6 +2,8 @@ import express, { NextFunction, Request, Response } from 'express';
 import 'express-async-errors';
 import { routers } from './routes';
 
+const PORT = process.env.PORT || 5000
+
 const app = express();
 
 app.use(express.json());
@@ -21,4 +23,4 @@ app.use((err: Error, request: Request, response: Response, next: NextFunction) =
     });
 });
 
-app.listen(3000, () => console.log("Server is running", 3000));
+app.listen(PORT, () => console.log("O pai ta on!", PORT));
