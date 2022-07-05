@@ -7,7 +7,7 @@ export class FindOpenHoursController {
         const { id_company } = request;
         const findOpenHoursUseCase = new FindOpenHoursUseCase();
 
-        const result = await findOpenHoursUseCase.execute(request.body, id_company)
+        const result = await findOpenHoursUseCase.execute(id_company)
 
         return response.json(result);
     }

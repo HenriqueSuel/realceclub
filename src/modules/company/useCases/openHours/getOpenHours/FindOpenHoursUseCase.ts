@@ -1,10 +1,9 @@
 import { prisma } from "../../../../../database/prismaClient";
 import { dataOpenHours } from "../../../../../helps/dataOpenHours";
-import { IOpeningHoursCompany } from "../../../../../interfaces/openHours.interface";
 
 
 export class FindOpenHoursUseCase {
-    async execute(data: IOpeningHoursCompany, id_company: string) {
+    async execute(id_company: string) {
 
         const openingHoursExists = await prisma.opening_hours_company.findFirst({
             where: {
