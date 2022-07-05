@@ -28,7 +28,7 @@ export class CreateCompanyUseCase {
                 cnpj,
                 phone,
                 password: hashPassword,
-                
+
             }
         })
 

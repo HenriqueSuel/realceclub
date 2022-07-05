@@ -19,5 +19,43 @@ model Company {
   created_at DateTime @default(now())
   update_at  DateTime @updatedAt
 
+  Opening_hours_company Opening_hours_company[]
   @@map("company")
+}
+
+model Opening_hours_company {
+  id         String @id @default(uuid())
+  id_company String
+
+  client Company @relation(fields: [id_company], references: [id])
+
+  monday            Boolean
+  time_start_monday String
+  time_end_monday  String
+
+  tuesday            Boolean
+  time_start_tuesday String
+  time_end_tuesday   String
+
+  wednesday            Boolean
+  time_start_wednesday String
+  time_end_wednesday   String
+
+  thursday            Boolean
+  time_start_thursday String
+  time_end_thursday   String
+
+  friday            Boolean
+  time_start_friday String
+  time_end_friday   String
+
+  saturday            Boolean
+  time_start_saturday String
+  time_end_saturday   String
+
+  sunday            Boolean
+  time_start_sunday String
+  time_end_sunday   String
+
+  @@map("opening_hours_company")
 }
