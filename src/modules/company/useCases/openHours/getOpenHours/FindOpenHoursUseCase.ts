@@ -22,6 +22,10 @@ export class FindOpenHoursUseCase {
                 return openingHours;
             } */
 
+
+        console.log('COMPANY AQUI HENRIQUE', prisma.company)
+        console.log('opening_hours_company AQUI HENRIQUE', prisma.opening_hours_company);
+        
         const openingHours = await prisma.opening_hours_company.create({
             data: {
                 ...dataOpenHours,
