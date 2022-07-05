@@ -19,7 +19,7 @@ model Company {
   created_at DateTime @default(now())
   update_at  DateTime @updatedAt
 
-  Opening_hours_company Opening_hours_company[]
+  opening_hours_company Opening_hours_company[]
   @@map("company")
 }
 
