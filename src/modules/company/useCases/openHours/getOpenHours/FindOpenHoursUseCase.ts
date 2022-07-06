@@ -7,6 +7,7 @@ export class FindOpenHoursUseCase {
 
         console.log('COMPANY AQUI HENRIQUE', prisma.company)
         console.log('opening_hours_company AQUI HENRIQUE', prisma.funcionamento);
+        console.log('opening_hours_company AQUI HENRIQUE', prisma.opening_hours_company);
 
 
 
