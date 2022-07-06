@@ -2,7 +2,7 @@ import { Router } from "express";
 import { ensureAuthenticateCompany } from "../../../middlewares/ensureAuthenticateCompany";
 import { AuthenticateClientController } from "../useCases/authenticateCompany/AuthenticateCompanyController";
 import { CreateCompanyController } from "../useCases/createCompany/createCompanyController";
-import { FindOpenHoursController } from "../useCases/openHours/getOpenHours/FindOpenHoursController";
+import { FindOpenHoursController } from "../useCases/openHours/findOpenHours/FindOpenHoursController";
 import { UpdateOpenHoursController } from "../useCases/openHours/updateOpenHours/UpdateOpenHoursController";
 
 
