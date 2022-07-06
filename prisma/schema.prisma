@@ -19,11 +19,11 @@ model Company {
   created_at DateTime @default(now())
   update_at  DateTime @updatedAt
 
-  opening_hours_company Opening_hours_company[]
   @@map("company")
+  Funcionamento Funcionamento[]
 }
 
-model Opening_hours_company {
+model Funcionamento {
   id         String @id @default(uuid())
   id_company String
 
@@ -31,7 +31,7 @@ model Opening_hours_company {
 
   monday            Boolean
   time_start_monday String
-  time_end_monday  String
+  time_end_monday   String
 
   tuesday            Boolean
   time_start_tuesday String
@@ -57,5 +57,5 @@ model Opening_hours_company {
   time_start_sunday String
   time_end_sunday   String
 
-  @@map("opening_hours_company")
+  @@map("funcionamento")
 }
