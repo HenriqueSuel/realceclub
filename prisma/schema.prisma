@@ -64,8 +64,6 @@ model Funcionamento {
   id         String @id @default(uuid())
   id_company String
 
-
-  monday            Boolean
   time_start_monday String
   time_end_monday   String
 
