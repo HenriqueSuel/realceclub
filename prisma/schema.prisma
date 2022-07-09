@@ -11,15 +11,17 @@ datasource db {
 }
 
 model Company {
-  id         String   @id @default(uuid())
-  email      String   @unique
-  cnpj       String   @unique
-  password   String
-  phone      String
-  created_at DateTime @default(now())
-  update_at  DateTime @updatedAt
+  id           String   @id @default(uuid())
+  email        String   @unique
+  cnpj         String   @unique
+  name_company String
+  password     String
+  phone        String
+  created_at   DateTime @default(now())
+  update_at    DateTime @updatedAt
 
   Opening_hours_company Opening_hours_company[]
+  contract              Contract[]
   @@map("company")
 }
 
@@ -27,12 +29,30 @@ model Hairdresser {
   id         String   @id @default(uuid())
   email      String   @unique
   cpf        String   @unique
+  name       String
   password   String
   phone      String
   created_at DateTime @default(now())
   update_at  DateTime @updatedAt
 
+  contract Contract[]
   @@map("hairdresser")
+}
+
+model Contract {
+  id     String @id @default(uuid())
+  status String
+
+  id_hairdress String
+  id_company   String
+
+  company     Company     @relation(fields: [id_company], references: [id])
+  hairdresser Hairdresser @relation(fields: [id_hairdress], references: [id])
+
+  created_at DateTime @default(now())
+  update_at  DateTime @updatedAt
+
+  @@map("contract")
 }
 
 model Opening_hours_company {

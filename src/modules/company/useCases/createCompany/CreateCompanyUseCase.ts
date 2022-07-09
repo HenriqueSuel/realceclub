@@ -6,10 +6,11 @@ interface ICreateClient {
     cnpj: string;
     password: string;
     phone: string;
+    name_company: string;
 }
 
 export class CreateCompanyUseCase {
-    async execute({ email, cnpj, password, phone }: ICreateClient) {
+    async execute({ email, cnpj, password, phone, name_company }: ICreateClient) {
         const companyExist = await prisma.company.findUnique({
             where: {
                 email
@@ -25,6 +26,7 @@ export class CreateCompanyUseCase {
         const company = await prisma.company.create({
             data: {
                 email,
+                name_company,
                 cnpj,
                 phone,
                 password: hashPassword,

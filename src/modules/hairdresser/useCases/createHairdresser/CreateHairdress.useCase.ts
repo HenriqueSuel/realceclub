@@ -6,10 +6,11 @@ interface ICreate {
     cpf: string;
     password: string;
     phone: string;
+    name: string;
 }
 
 export class CreateHairdresserUseCase {
-    async execute({ email, cpf, password, phone }: ICreate) {
+    async execute({ email, cpf, password, phone, name }: ICreate) {
         const hairdresserExist = await prisma.hairdresser.findUnique({
             where: {
                 email
@@ -25,6 +26,7 @@ export class CreateHairdresserUseCase {
         const hairdresser = await prisma.hairdresser.create({
             data: {
                 email,
+                name,
                 cpf,
                 phone,
                 password: hashPassword,

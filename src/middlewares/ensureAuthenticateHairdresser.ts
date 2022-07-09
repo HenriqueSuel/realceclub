@@ -4,8 +4,7 @@ import { verify } from 'jsonwebtoken';
 interface IPayload {
     sub: string;
 }
-
-export async function ensureAuthenticateCompany(
+export async function ensureAuthenticateHairdresser(
     request: Request,
     response: Response,
     next: NextFunction,
@@ -20,7 +19,8 @@ export async function ensureAuthenticateCompany(
 
     try {
         const { sub } = verify(token, '739f8ebd49733117a132c34fe866bc09') as IPayload;
-        request.id_company = sub;
+
+        request.id_hairdresser = sub;
 
         return next();
     } catch (error) {
