@@ -20,8 +20,9 @@ model Company {
   created_at   DateTime @default(now())
   update_at    DateTime @updatedAt
 
-  Opening_hours_company Opening_hours_company[]
-  contract              Contract[]
+  Opening_hours_company  Opening_hours_company?
+  contract               Contract[]
+  Job_Categories_Company Job_Categories_Company[]
   @@map("company")
 }
 
@@ -35,7 +36,8 @@ model Hairdresser {
   created_at DateTime @default(now())
   update_at  DateTime @updatedAt
 
-  contract Contract[]
+  contract                  Contract[]
+  Opening_hours_hairdresser Opening_hours_hairdresser[]
   @@map("hairdresser")
 }
 
@@ -43,11 +45,11 @@ model Contract {
   id     String @id @default(uuid())
   status String
 
-  id_hairdress String
-  id_company   String
+  id_hairdresser String
+  id_company     String
 
   company     Company     @relation(fields: [id_company], references: [id])
-  hairdresser Hairdresser @relation(fields: [id_hairdress], references: [id])
+  hairdresser Hairdresser @relation(fields: [id_hairdresser], references: [id])
 
   created_at DateTime @default(now())
   update_at  DateTime @updatedAt
@@ -57,7 +59,7 @@ model Contract {
 
 model Opening_hours_company {
   id         String @id @default(uuid())
-  id_company String
+  id_company String @unique
 
   client Company @relation(fields: [id_company], references: [id])
 
@@ -90,4 +92,76 @@ model Opening_hours_company {
   time_end_sunday   String
 
   @@map("opening_hours_company")
+}
+
+model Opening_hours_hairdresser {
+  id             String @id @default(uuid())
+  id_hairdresser String
+
+  hairdresser Hairdresser @relation(fields: [id_hairdresser], references: [id])
+
+  monday            Boolean
+  time_start_monday String
+  time_end_monday   String
+
+  tuesday            Boolean
+  time_start_tuesday String
+  time_end_tuesday   String
+
+  wednesday            Boolean
+  time_start_wednesday String
+  time_end_wednesday   String
+
+  thursday            Boolean
+  time_start_thursday String
+  time_end_thursday   String
+
+  friday            Boolean
+  time_start_friday String
+  time_end_friday   String
+
+  saturday            Boolean
+  time_start_saturday String
+  time_end_saturday   String
+
+  sunday            Boolean
+  time_start_sunday String
+  time_end_sunday   String
+
+  @@map("opening_hours_hairdresser")
+}
+
+model Job_Categories {
+  id   String @id @default(uuid())
+  name String
+
+  Job_Categories_Company Job_Categories_Company?
+  @@map("job_categories")
+}
+
+model Job_Categories_Company {
+  id     String  @id @default(uuid())
+  status Boolean
+
+  id_job     String @unique
+  id_company String
+
+  job_categories Job_Categories @relation(fields: [id_job], references: [id])
+  company        Company        @relation(fields: [id_company], references: [id])
+
+
+  Job_Sub_Categories Job_Sub_Categories[]
+  @@map("job_categories_company")
+}
+
+model Job_Sub_Categories {
+  id                      String @id @default(uuid())
+  name                    String
+  id_job_category_company String @unique
+  description             String
+
+  job_categories_company Job_Categories_Company @relation(fields: [id_job_category_company], references: [id])
+
+
+  @@map("job_sub_categories")
 }
