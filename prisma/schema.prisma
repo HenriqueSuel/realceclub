@@ -20,9 +20,10 @@ model Company {
   created_at   DateTime @default(now())
   update_at    DateTime @updatedAt
 
-  Opening_hours_company  Opening_hours_company?
+  opening_hours_company  Opening_hours_company?
   contract               Contract[]
-  Job_Categories_Company Job_Categories_Company[]
+  job_categories_company Job_Categories_Company[]
+
   @@map("company")
 }
 
@@ -36,8 +37,8 @@ model Hairdresser {
   created_at DateTime @default(now())
   update_at  DateTime @updatedAt
 
-  contract                  Contract[]
-  Opening_hours_hairdresser Opening_hours_hairdresser[]
+  contract Contract[]
+
   @@map("hairdresser")
 }
 
@@ -51,8 +52,9 @@ model Contract {
   company     Company     @relation(fields: [id_company], references: [id])
   hairdresser Hairdresser @relation(fields: [id_hairdresser], references: [id])
 
-  created_at DateTime @default(now())
-  update_at  DateTime @updatedAt
+  created_at    DateTime        @default(now())
+  update_at     DateTime        @updatedAt
+  work_Schedule Work_Schedule[]
 
   @@map("contract")
 }
@@ -94,48 +96,47 @@ model Opening_hours_company {
   @@map("opening_hours_company")
 }
 
-model Opening_hours_hairdresser {
-  id             String @id @default(uuid())
-  id_hairdresser String
+model Weeks {
+  id Int @default(autoincrement())
+  name String @unique
 
-  hairdresser Hairdresser @relation(fields: [id_hairdresser], references: [id])
+  work_Schedule Work_Schedule[]
 
-  monday            Boolean
-  time_start_monday String
-  time_end_monday   String
+  @@map("weeks")
+}
 
-  tuesday            Boolean
-  time_start_tuesday String
-  time_end_tuesday   String
+model Work_Schedule {
+  id String @id @default(uuid())
 
-  wednesday            Boolean
-  time_start_wednesday String
-  time_end_wednesday   String
+  start String
+  end   String
 
-  thursday            Boolean
-  time_start_thursday String
-  time_end_thursday   String
+  name_week   String 
+  id_contract String 
 
-  friday            Boolean
-  time_start_friday String
-  time_end_friday   String
+  week        Weeks         @relation(fields: [name_week], references: [name])
+  contract    Contract      @relation(fields: [id_contract], references: [id])
+  work_Breaks Work_Breaks[]
 
-  saturday            Boolean
-  time_start_saturday String
-  time_end_saturday   String
+  @@map("work_schedule")
+}
 
-  sunday            Boolean
-  time_start_sunday String
-  time_end_sunday   String
+model Work_Breaks {
+  id String @id @default(uuid())
 
-  @@map("opening_hours_hairdresser")
+  start String
+  end   String
+
+  id_work_schedule String
+  work_schedule    Work_Schedule @relation(fields: [id_work_schedule], references: [id])
 }
 
 model Job_Categories {
   id   String @id @default(uuid())
   name String
 
-  Job_Categories_Company Job_Categories_Company?
+  job_categories_company Job_Categories_Company?
+
   @@map("job_categories")
 }
 
@@ -149,8 +150,8 @@ model Job_Categories_Company {
   job_categories Job_Categories @relation(fields: [id_job], references: [id])
   company        Company        @relation(fields: [id_company], references: [id])
 
+  job_sub_categories Job_Sub_Categories[]
 
-  Job_Sub_Categories Job_Sub_Categories[]
   @@map("job_categories_company")
 }
 
@@ -161,7 +162,6 @@ model Job_Sub_Categories {
   description             String
 
   job_categories_company Job_Categories_Company @relation(fields: [id_job_category_company], references: [id])
-
 
   @@map("job_sub_categories")
 }
