@@ -4,6 +4,11 @@ export const prisma = new PrismaClient();
 
 
 async function main() {
+    createWeek();
+    createCategory();
+}
+
+async function createWeek() {
     const week = await prisma.weeks.findFirst();
     if (week) return;
     await prisma.weeks.createMany({
@@ -41,6 +46,37 @@ async function main() {
     })
 }
 
+async function createCategory() {
+    const jobCategories = await prisma.job_Categories.findFirst();
+    if (jobCategories) return
+    await prisma.job_Categories.createMany({
+        data: [
+            {
+                name: 'Cabelo',
+
+            },
+            {
+                name: 'Barba'
+            },
+            {
+                name: 'Estéticas'
+            },
+            {
+                name: 'Maquiagem'
+            },
+            {
+                name: 'Massagem'
+            },
+            {
+                name: 'Sobrancelhas e cílios'
+            },
+            {
+                name: 'Unhas'
+            },
+        ]
+    })
+
+}
 
 main()
     .then(async () => {
