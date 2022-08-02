@@ -52,9 +52,10 @@ model Contract {
   company     Company     @relation(fields: [id_company], references: [id])
   hairdresser Hairdresser @relation(fields: [id_hairdresser], references: [id])
 
-  created_at    DateTime        @default(now())
-  update_at     DateTime        @updatedAt
-  work_Schedule Work_Schedule[]
+  created_at      DateTime          @default(now())
+  update_at       DateTime          @updatedAt
+  work_Schedule   Work_Schedule[]
+  job_hairdresser job_hairdresser[]
 
   @@map("contract")
 }
@@ -97,7 +98,7 @@ model Opening_hours_company {
 }
 
 model Weeks {
-  id Int @default(autoincrement())
+  id   Int    @default(autoincrement())
   name String @unique
 
   work_Schedule Work_Schedule[]
@@ -111,8 +112,8 @@ model Work_Schedule {
   start String
   end   String
 
-  name_week   String 
-  id_contract String 
+  name_week   String
+  id_contract String
 
   week        Weeks         @relation(fields: [name_week], references: [name])
   contract    Contract      @relation(fields: [id_contract], references: [id])
@@ -158,10 +159,23 @@ model Job_Categories_Company {
 model Job_Sub_Categories {
   id                      String @id @default(uuid())
   name                    String
-  id_job_category_company String @unique
+  id_job_category_company String
   description             String
+  price                   String
 
   job_categories_company Job_Categories_Company @relation(fields: [id_job_category_company], references: [id])
+  job_hairdresser        job_hairdresser?
 
   @@map("job_sub_categories")
+}
+
+model job_hairdresser {
+  id       String @id @default(uuid())
+  duration String
+
+  id_contract String
+  contract    Contract @relation(fields: [id_contract], references: [id])
+
+  id_job_sub_categories String             @unique
+  job_sub_categories    Job_Sub_Categories @relation(fields: [id_job_sub_categories], references: [id])
 }

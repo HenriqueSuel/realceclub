@@ -4,11 +4,13 @@ interface IProps {
     id_category: string;
     name: string;
     description: string;
+    price: number;
 }
 
 export class CreateSubCategoryUseCase {
-    async execute({ id_category, description, name }: IProps) {
+    async execute({ id_category, description, name, price }: IProps) {
 
+        console.log(price)
         const findCategoryWithNameEqual = await prisma.job_Sub_Categories.findFirst({
             where: {
                 name
@@ -24,6 +26,7 @@ export class CreateSubCategoryUseCase {
                 name,
                 description,
                 id_job_category_company: id_category,
+                price
             }
         });
 
